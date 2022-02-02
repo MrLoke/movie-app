@@ -6,6 +6,7 @@ const makeTheme = <T extends Theme>(t: T) => t
 export const theme = makeTheme({
   fonts: {
     body: 'Roboto, sans-serif',
+    heading: 'Roboto, sans-serif',
   },
   fontWeights: {
     light: 300,
@@ -14,10 +15,20 @@ export const theme = makeTheme({
     bold: 700,
   },
   colors: {
-    text: '#111111',
-    background: '#EEEEEE',
-    primary: '#0073ff',
-    secondary: '#00397f',
+    text: '#171717',
+    background: '#e2e8f0',
+    primary: '#0f172a',
+    secondary: '#1e293b',
+  },
+  badges: {
+    primary: {
+      color: '#f0f9ff',
+      bg: '#1e293b',
+    },
+    accent: {
+      color: '#f0f9ff',
+      bg: '#0ea5e9',
+    },
   },
 })
 
