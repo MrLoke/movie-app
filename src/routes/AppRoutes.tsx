@@ -4,6 +4,7 @@ import FavouritePage from 'pages/FavouritePage/FavouritePage'
 import HomePage from 'pages/HomePage/HomePage'
 import MoviePage from 'pages/MoviePage/MoviePage'
 import NotFoundPage from 'pages/NotFoundPage/NotFoundPage'
+import SearchResultsPage from 'pages/SearchResultsPage/SearchResultsPage'
 import WatchlistPage from 'pages/WatchlistPage/WatchlistPage'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import GlobalStyles from 'theme/GlobalStyles'
@@ -20,6 +21,7 @@ const AppRoutes = () => {
             <Route path="movie/:name" element={<MoviePage />} />
             <Route path="watchlist" element={<WatchlistPage />} />
             <Route path="favourite" element={<FavouritePage />} />
+            <Route path="search" element={<SearchResultsPage />} />
             <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </Layout>
