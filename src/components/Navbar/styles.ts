@@ -6,6 +6,7 @@ export const styles = {
     display: 'flex',
     alignItems: 'space-around',
     color: '#fff',
+    zIndex: 2,
   },
   navContainer: {
     display: 'flex',
@@ -28,6 +29,7 @@ export const styles = {
     padding: '10px 15px',
     textDecoration: 'none',
     color: '#fff',
+    transition: 'all 0.1s ease-in',
 
     '&:hover': {
       background: 'secondary',
