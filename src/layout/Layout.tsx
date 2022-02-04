@@ -5,7 +5,7 @@ const Layout = ({ children }: { children: ReactNode }) => {
   return (
     <Box
       sx={{
-        maxWidth: '1200px',
+        maxWidth: '1300px',
         marginX: 'auto',
       }}
     >
