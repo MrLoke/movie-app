@@ -19,6 +19,7 @@ export const theme = makeTheme({
     background: '#e2e8f0',
     primary: '#0f172a',
     secondary: '#1e293b',
+    accent: '#3b82f6',
   },
   badges: {
     primary: {
