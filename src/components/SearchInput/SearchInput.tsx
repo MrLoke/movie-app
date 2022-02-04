@@ -1,7 +1,7 @@
 import { ChangeEvent, FormEvent } from 'react'
 import { useRecoilState } from 'recoil'
 import { searchInputState } from 'atoms/searchInputAtom'
-import { Box, Button, Input } from 'theme-ui'
+import { Box, IconButton, Input } from 'theme-ui'
 import { useNavigate } from 'react-router-dom'
 import { AiOutlineSearch } from 'react-icons/ai'
 
@@ -24,21 +24,27 @@ const SearchInput = () => {
       onSubmit={handleSubmitForm}
       sx={{
         display: 'flex',
+        alignItems: 'center',
       }}
     >
       <Input
         sx={{
           outline: 'none',
           background: 'background',
-          border: '2px solid #64748b',
+          border: '2px solid',
           color: 'text',
           borderRadius: '6px',
+          paddingRight: '40px',
+          paddingY: '10px',
+          ':focus': {
+            borderColor: 'accent',
+          },
         }}
         placeholder="Search movie"
         defaultValue={searchInput}
         onChange={handleInputChange}
       />
-      <Button
+      <IconButton
         type="submit"
         sx={{
           padding: '0 5px',
@@ -46,10 +52,13 @@ const SearchInput = () => {
           alignItems: 'center',
           cursor: 'pointer',
           background: 'background',
+          marginLeft: '-35px',
+          borderLeft: '1px solid #111',
+          borderRadius: 0,
         }}
       >
-        <AiOutlineSearch color="#111" size="35px" />
-      </Button>
+        <AiOutlineSearch color="#111" size="40px" />
+      </IconButton>
     </Box>
   )
 }
