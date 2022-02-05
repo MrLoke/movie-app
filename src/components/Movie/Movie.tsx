@@ -1,48 +1,18 @@
 /** @jsxImportSource theme-ui */
-import { useEffect, useState } from 'react'
-import { useRecoilState } from 'recoil'
 import { Link } from 'react-router-dom'
+import useAddToFavourite from 'hooks/useAddToFavourite'
+import useAddToWatchList from 'hooks/useAddToWatchList'
 import { IMG_API, IMG_PLACEHOLDER } from 'api/themoviedb'
 import { Box, Flex, Image, Text, IconButton } from 'theme-ui'
+import { SingleMovieTypes } from 'types/types'
 import { styles } from './styles'
-import { DetailMovieProps, SingleMovieProps } from 'types/types'
 import { AiFillStar } from 'react-icons/ai'
 import { MdFavoriteBorder, MdFavorite } from 'react-icons/md'
 import { IoBookmarkOutline, IoBookmarkSharp } from 'react-icons/io5'
-import { favouriteState } from 'atoms/favouriteAtom'
-import { watchListState } from 'atoms/watchListAtom'
 
-const Movie = ({ movie }: SingleMovieProps) => {
-  const [favourite, setFavourite] = useRecoilState(favouriteState)
-  const [watchList, setWatchList] = useRecoilState(watchListState)
-  const [isFavourite, setIsFavourite] = useState(false)
-  const [isWatchList, setIsWatchList] = useState(false)
-
-  useEffect(() => {
-    // Checking if movie already exist in favourite array
-    setIsFavourite(favourite.findIndex((item) => item.id === movie.id) !== -1)
-  }, [favourite])
-
-  useEffect(() => {
-    setIsWatchList(watchList.findIndex((item) => item.id === movie.id) !== -1)
-  }, [watchList])
-
-  const addMovieToFavourite = (movie: DetailMovieProps) => {
-    // If exist remove from array
-    if (isFavourite) {
-      setFavourite(favourite.filter((item) => item.id !== movie.id))
-    } else {
-      setFavourite([...favourite, movie])
-    }
-  }
-
-  const addMovieToWatchList = (movie: DetailMovieProps) => {
-    if (isWatchList) {
-      setWatchList(watchList.filter((item) => item.id !== movie.id))
-    } else {
-      setWatchList([...watchList, movie])
-    }
-  }
+const Movie = ({ movie }: SingleMovieTypes) => {
+  const { isFavourite, addMovieToFavourite } = useAddToFavourite(movie)
+  const { isWatchList, addMovieToWatchList } = useAddToWatchList(movie)
 
   return (
     <Box
@@ -63,7 +33,17 @@ const Movie = ({ movie }: SingleMovieProps) => {
       >
         <IconButton
           aria-label="Add movie to favorite"
-          onClick={() => addMovieToFavourite(movie)}
+          onClick={() =>
+            addMovieToFavourite({
+              title: movie.title,
+              id: movie.id,
+              poster_path: movie.poster_path,
+              vote_average: movie.vote_average,
+              release_date: movie.release_date,
+              popularity: movie.popularity,
+              overview: movie.overview,
+            })
+          }
         >
           {isFavourite ? (
             <MdFavorite
@@ -81,7 +61,17 @@ const Movie = ({ movie }: SingleMovieProps) => {
         </IconButton>
         <IconButton
           aria-label="Add movie to watch list"
-          onClick={() => addMovieToWatchList(movie)}
+          onClick={() =>
+            addMovieToWatchList({
+              title: movie.title,
+              id: movie.id,
+              poster_path: movie.poster_path,
+              vote_average: movie.vote_average,
+              release_date: movie.release_date,
+              popularity: movie.popularity,
+              overview: movie.overview,
+            })
+          }
         >
           {isWatchList ? (
             <IoBookmarkSharp
@@ -98,9 +88,8 @@ const Movie = ({ movie }: SingleMovieProps) => {
           )}
         </IconButton>
       </Flex>
-      <Box
+      <Flex
         sx={{
-          display: 'flex',
           flexDirection: 'column',
           flexWrap: 'wrap',
         }}
@@ -131,9 +120,8 @@ const Movie = ({ movie }: SingleMovieProps) => {
             />
           )}
         </Link>
-        <Box
+        <Flex
           sx={{
-            display: 'flex',
             flexDirection: 'column',
             padding: '10px',
           }}
@@ -179,8 +167,8 @@ const Movie = ({ movie }: SingleMovieProps) => {
             Rating:&nbsp;<strong>{movie.vote_average}</strong>&nbsp;
             <AiFillStar color="#fff600" size="15px" />
           </Text>
-        </Box>
-      </Box>
+        </Flex>
+      </Flex>
     </Box>
   )
 }
