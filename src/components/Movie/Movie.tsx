@@ -1,16 +1,16 @@
 /** @jsxImportSource theme-ui */
+import { useEffect, useState } from 'react'
+import { useRecoilState } from 'recoil'
 import { Link } from 'react-router-dom'
 import { IMG_API, IMG_PLACEHOLDER } from 'api/themoviedb'
-import { Box, Flex, Image, Text, IconButton, Alert } from 'theme-ui'
+import { Box, Flex, Image, Text, IconButton } from 'theme-ui'
 import { styles } from './styles'
 import { DetailMovieProps, SingleMovieProps } from 'types/types'
 import { AiFillStar } from 'react-icons/ai'
 import { MdFavoriteBorder, MdFavorite } from 'react-icons/md'
 import { IoBookmarkOutline, IoBookmarkSharp } from 'react-icons/io5'
-import { useRecoilState } from 'recoil'
 import { favouriteState } from 'atoms/favouriteAtom'
 import { watchListState } from 'atoms/watchListAtom'
-import { useEffect, useState } from 'react'
 
 const Movie = ({ movie }: SingleMovieProps) => {
   const [favourite, setFavourite] = useRecoilState(favouriteState)
@@ -19,6 +19,7 @@ const Movie = ({ movie }: SingleMovieProps) => {
   const [isWatchList, setIsWatchList] = useState(false)
 
   useEffect(() => {
+    // Checking if movie already exist in favourite array
     setIsFavourite(favourite.findIndex((item) => item.id === movie.id) !== -1)
   }, [favourite])
 
@@ -27,6 +28,7 @@ const Movie = ({ movie }: SingleMovieProps) => {
   }, [watchList])
 
   const addMovieToFavourite = (movie: DetailMovieProps) => {
+    // If exist remove from array
     if (isFavourite) {
       setFavourite(favourite.filter((item) => item.id !== movie.id))
     } else {
