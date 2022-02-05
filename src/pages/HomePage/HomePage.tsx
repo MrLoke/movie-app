@@ -1,10 +1,38 @@
-/** @jsxImportSource theme-ui */
 import FiltersMovies from 'components/FiltersMovies/FiltersMovies'
-import MoviesList from 'components/MoviesList/MoviesList'
+import Pagination from 'components/Pagination/Pagination'
 import SortMovies from 'components/SortMovies/SortMovies'
-import { Box, Flex } from 'theme-ui'
+import { useEffect, useState } from 'react'
+import { Box, Flex, Spinner, Text } from 'theme-ui'
+import { BASE_URL } from 'api/themoviedb'
+import useFetch from 'hooks/useFetch'
+import { useRecoilValue } from 'recoil'
+import { genresState, releaseYearState } from 'atoms/filtersAtom'
+import concatenateGenre from 'utils/concatenateGenre'
+import { ResultsMovieTypes } from 'types/types'
+import { sortState } from 'atoms/sortAtom'
+import Movie from 'components/Movie/Movie'
 
 const HomePage = () => {
+  const [totalPages, setTotalPages] = useState(1)
+  const [currentPage, setCurrentPage] = useState(1)
+  const selectedGenres = useRecoilValue(genresState)
+  const releaseYear = useRecoilValue(releaseYearState)
+  const selectedSort = useRecoilValue(sortState)
+  const genreforURL = concatenateGenre(selectedGenres)
+  const url = `${BASE_URL}/discover/movie?api_key=${process.env.REACT_APP_API_KEY}&language=en-US&sort_by=${selectedSort}&primary_release_year=${releaseYear}&page=${currentPage}&with_genres=${genreforURL}`
+  const { data, error } = useFetch<ResultsMovieTypes>(url)
+
+  useEffect(() => {
+    if (data?.total_pages !== undefined) {
+      setTotalPages(data?.total_pages)
+    }
+  }, [data])
+
+  const handlePageChange = (pageNumber: number) => {
+    setCurrentPage(pageNumber)
+    window.scrollTo(0, 0)
+  }
+
   return (
     <Box sx={{ marginTop: '50px' }}>
       <Flex
@@ -30,7 +58,27 @@ const HomePage = () => {
           <FiltersMovies />
           <SortMovies />
         </Flex>
-        <MoviesList />
+        <Flex
+          sx={{
+            flex: '0.75',
+            flexWrap: 'wrap',
+            justifyContent: 'center',
+          }}
+        >
+          {data ? (
+            data.results.map((item: any) => (
+              <Movie key={item.id} movie={item} />
+            ))
+          ) : (
+            <Spinner />
+          )}
+          {error ? <Text>{error}</Text> : null}
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            handlePageChange={handlePageChange}
+          />
+        </Flex>
       </Flex>
     </Box>
   )
