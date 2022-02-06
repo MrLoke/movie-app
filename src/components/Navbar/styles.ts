@@ -24,18 +24,6 @@ export const styles = {
   navItem: {
     padding: '5px 0px',
   },
-  navLink: {
-    display: 'block',
-    padding: '10px 15px',
-    textDecoration: 'none',
-    color: '#fff',
-    transition: 'all 0.1s ease-in',
-
-    '&:hover': {
-      background: 'secondary',
-      color: '#fff',
-    },
-  },
   mobileMenu: {
     display: 'flex',
     flexDirection: 'column',

@@ -1,9 +1,31 @@
 /** @jsxImportSource theme-ui */
 import SearchInput from 'components/SearchInput/SearchInput'
 import { useState } from 'react'
-import { NavLink } from 'react-router-dom'
-import { Box, MenuButton, Close } from 'theme-ui'
+import { Link, useResolvedPath, useMatch } from 'react-router-dom'
+import type { LinkProps } from 'react-router-dom'
+import { Box, MenuButton, Close, Flex } from 'theme-ui'
 import { styles } from './styles'
+
+const CustomLink = ({ children, to, ...props }: LinkProps) => {
+  const resolved = useResolvedPath(to)
+  const match = useMatch({ path: resolved.pathname, end: true })
+
+  return (
+    <Link
+      style={{
+        textDecoration: match ? 'underline' : 'none',
+        fontWeight: match ? '500' : '400',
+        color: '#fff',
+        padding: '10px 15px',
+        transition: 'all 0.1s ease-in',
+      }}
+      to={to}
+      {...props}
+    >
+      {children}
+    </Link>
+  )
+}
 
 const navLinks = [
   {
@@ -46,15 +68,13 @@ const Navbar = () => {
           <h3>Movie App</h3>
         </Box>
 
-        <Box as="ul" sx={styles.navbarGroup}>
+        <Flex as="ul" sx={styles.navbarGroup}>
           {navLinks.map((item) => (
             <Box as="li" sx={styles.navItem} key={item.url}>
-              <NavLink to={item.url} sx={styles.navLink}>
-                {item.name}
-              </NavLink>
+              <CustomLink to={item.url}>{item.name}</CustomLink>
             </Box>
           ))}
-        </Box>
+        </Flex>
 
         <SearchInput />
 
@@ -83,22 +103,19 @@ const Navbar = () => {
 
       {/* Conditional render mobile menu */}
       {showMobileMenu ? (
-        <Box
+        <Flex
           as="ul"
           sx={{
-            display: 'flex',
             flexDirection: 'column',
             background: 'primary',
           }}
         >
           {navLinks.map((item) => (
             <Box as="li" sx={styles.navItem} key={item.url}>
-              <NavLink to={item.url} sx={styles.navLink}>
-                {item.name}
-              </NavLink>
+              <CustomLink to={item.url}>{item.name}</CustomLink>
             </Box>
           ))}
-        </Box>
+        </Flex>
       ) : null}
     </Box>
   )
