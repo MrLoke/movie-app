@@ -9,7 +9,7 @@ const useAddToWatchList = (movie: any) => {
   useEffect(() => {
     // Check if movie already exist in watch list array
     setIsWatchList(watchList.findIndex((item) => item.id === movie.id) !== -1)
-  }, [watchList])
+  }, [watchList, movie.id])
 
   const addMovieToWatchList = (movie: any) => {
     // If exist remove from array

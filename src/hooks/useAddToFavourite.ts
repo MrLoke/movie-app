@@ -9,7 +9,7 @@ const useAddToFavourite = (movie: any) => {
   useEffect(() => {
     // Check if movie already exist in favourite array
     setIsFavourite(favourite.findIndex((item) => item.id === movie.id) !== -1)
-  }, [favourite])
+  }, [favourite, movie.id])
 
   const addMovieToFavourite = (movie: any) => {
     // If exist remove from array
