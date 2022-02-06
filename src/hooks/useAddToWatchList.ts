@@ -1,9 +1,12 @@
 import { useEffect, useState } from 'react'
 import { useRecoilState } from 'recoil'
 import { watchListState } from 'atoms/watchListAtom'
+import { AddMovieTypes } from 'types/types'
 
 const useAddToWatchList = (movie: any) => {
-  const [watchList, setWatchList] = useRecoilState(watchListState)
+  const [watchList, setWatchList] =
+    //@ts-ignore
+    useRecoilState<AddMovieTypes[]>(watchListState)
   const [isWatchList, setIsWatchList] = useState(false)
 
   useEffect(() => {

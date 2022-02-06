@@ -3,7 +3,9 @@ import { useRecoilState } from 'recoil'
 import { favouriteState } from 'atoms/favouriteAtom'
 
 const useAddToFavourite = (movie: any) => {
-  const [favourite, setFavourite] = useRecoilState(favouriteState)
+  const [favourite, setFavourite] =
+    //@ts-ignore
+    useRecoilState<AddMovieTypes[]>(favouriteState)
   const [isFavourite, setIsFavourite] = useState(false)
 
   useEffect(() => {
