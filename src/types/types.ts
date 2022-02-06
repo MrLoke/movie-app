@@ -73,6 +73,16 @@ export interface GenresProps {
   }[]
 }
 
+export interface AddMovieTypes {
+  title: string
+  id: number
+  poster_path: string
+  vote_average: number
+  release_date: string
+  popularity: number
+  overview: string
+}
+
 export interface DetailMovieTypes {
   adult: boolean
   backdrop_path: string
