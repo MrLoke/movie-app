@@ -18,7 +18,7 @@ import { GenresProps } from 'types/types'
 import { BiChevronRight, BiChevronDown } from 'react-icons/bi'
 
 const FiltersMovies = () => {
-  const [selectedGenres, setSelectedGenres] = useRecoilState(genresState)
+  const [selectedGenres, setSelectedGenres] = useRecoilState<any>(genresState)
   const setReleaseYear = useSetRecoilState(releaseYearState)
   const resetReleaseYear = useResetRecoilState(releaseYearState)
   const [year, setYear] = useState('')
@@ -50,6 +50,7 @@ const FiltersMovies = () => {
     setYear('')
   }
 
+  //@ts-ignore
   const handleSelectGenre = (genre: { id: number; name: string }) => {
     setSelectedGenres([...selectedGenres, genre])
     setGenres(genres.filter((g: { id: number }) => g.id !== genre.id)) // Remove duplicat if any genre is marked
@@ -57,7 +58,9 @@ const FiltersMovies = () => {
 
   const handleRemoveGenre = (genre: { id: number; name: string }) => {
     setSelectedGenres(
-      selectedGenres.filter((selected) => selected.id !== genre.id)
+      selectedGenres.filter(
+        (selected: { id: number }) => selected.id !== genre.id
+      )
     )
     setGenres([...genres, genre])
   }
@@ -91,7 +94,7 @@ const FiltersMovies = () => {
           >
             Filtr by genre
           </Text>
-          {selectedGenres.map((genre) => (
+          {selectedGenres.map((genre: { id: number; name: string }) => (
             <Badge
               key={genre.id}
               variant="accent"
