@@ -19,6 +19,6 @@ const localStorageEffect: <T>(key: string) => AtomEffect<T> =
 
 export const favouriteState = atom({
   key: 'favouriteState',
-  default: Array(),
+  default: [],
   effects: [localStorageEffect('favourite')],
 })
