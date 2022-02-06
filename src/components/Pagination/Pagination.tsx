@@ -21,7 +21,7 @@ const Pagination = ({
   let l
 
   for (let i = 1; i <= totalPages; i++) {
-    if (i == 1 || i == totalPages || (i >= startPage && i < endPage)) {
+    if (i === 1 || i === totalPages || (i >= startPage && i < endPage)) {
       range.push(i)
     }
   }
