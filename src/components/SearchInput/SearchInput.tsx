@@ -1,21 +1,28 @@
-import { ChangeEvent, FormEvent } from 'react'
-import { useRecoilState } from 'recoil'
+import { ChangeEvent, FormEvent, useState } from 'react'
+import { useSetRecoilState } from 'recoil'
 import { searchInputState } from 'atoms/searchInputAtom'
 import { Box, IconButton, Input } from 'theme-ui'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, createSearchParams } from 'react-router-dom'
 import { AiOutlineSearch } from 'react-icons/ai'
 
 const SearchInput = () => {
-  const [searchInput, setSearchInput] = useRecoilState(searchInputState)
+  const setSearchInput = useSetRecoilState(searchInputState)
+  const [inputValue, setInputValue] = useState('')
   const navigate = useNavigate()
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setSearchInput(e.target.value)
+    setInputValue(e.target.value)
   }
 
   const handleSubmitForm = (e: FormEvent<HTMLInputElement>) => {
     e.preventDefault()
-    navigate('search')
+    setSearchInput(inputValue)
+    navigate({
+      pathname: '/search',
+      search: `?${createSearchParams({
+        query: `${inputValue}`,
+      })}`,
+    })
   }
 
   return (
@@ -41,7 +48,7 @@ const SearchInput = () => {
           },
         }}
         placeholder="Search movie"
-        defaultValue={searchInput}
+        defaultValue={inputValue}
         onChange={handleInputChange}
       />
       <IconButton
