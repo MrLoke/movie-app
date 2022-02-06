@@ -4,7 +4,8 @@ import { useRecoilValue } from 'recoil'
 import { Box, Flex, Heading } from 'theme-ui'
 
 const WatchlistPage = () => {
-  const watchList = useRecoilValue(watchListState)
+  const watchList = useRecoilValue<any[]>(watchListState)
+
   return (
     <Box
       sx={{

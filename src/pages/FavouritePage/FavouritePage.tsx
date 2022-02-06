@@ -4,7 +4,8 @@ import { useRecoilValue } from 'recoil'
 import { Box, Flex, Heading } from 'theme-ui'
 
 const FavouritePage = () => {
-  const favourite = useRecoilValue(favouriteState)
+  const favourite = useRecoilValue<any[]>(favouriteState)
+
   return (
     <Box
       sx={{
