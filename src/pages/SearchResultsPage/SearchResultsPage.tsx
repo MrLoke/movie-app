@@ -31,6 +31,7 @@ const SearchResultsPage = () => {
       sx={{
         marginTop: '50px',
         flexDirection: 'column',
+        alignItems: 'center',
       }}
     >
       {data ? (
