@@ -66,18 +66,20 @@ const HomePage = () => {
           }}
         >
           {data ? (
-            data.results.map((item: any) => (
-              <Movie key={item.id} movie={item} />
-            ))
+            <>
+              {data.results.map((item: any) => (
+                <Movie key={item.id} movie={item} />
+              ))}
+              <Pagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                handlePageChange={handlePageChange}
+              />
+            </>
           ) : (
             <Spinner />
           )}
           {error ? <Text>{error}</Text> : null}
-          <Pagination
-            currentPage={currentPage}
-            totalPages={totalPages}
-            handlePageChange={handlePageChange}
-          />
         </Flex>
       </Flex>
     </Box>
