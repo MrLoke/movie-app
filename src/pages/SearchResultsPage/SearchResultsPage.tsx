@@ -5,7 +5,7 @@ import { useRecoilValue } from 'recoil'
 import { searchInputState } from 'atoms/searchInputAtom'
 import { SEARCH_URL } from 'api/themoviedb'
 import useFetch from 'hooks/useFetch'
-import { Flex, Text, Spinner } from 'theme-ui'
+import { Flex, Text, Spinner, Heading } from 'theme-ui'
 import { ResultsMovieTypes } from 'types/types'
 
 const SearchResultsPage = () => {
@@ -14,6 +14,8 @@ const SearchResultsPage = () => {
   const searchValue = useRecoilValue(searchInputState)
   const url = `${SEARCH_URL}/movie?query=${searchValue}&api_key=${process.env.REACT_APP_API_KEY}&language=en-US&page=${currentPage}`
   const { data, error } = useFetch<ResultsMovieTypes>(url)
+  console.log('data', data)
+  console.log('error', error)
 
   useEffect(() => {
     if (data?.total_pages !== undefined) {
@@ -50,6 +52,11 @@ const SearchResultsPage = () => {
       ) : (
         <Spinner />
       )}
+
+      {data?.results.length === 0 ? (
+        <Heading>There are no movies that matched your query.</Heading>
+      ) : null}
+
       {error ? <Text>{error}</Text> : null}
     </Flex>
   )
