@@ -49,7 +49,7 @@ const SearchInput = () => {
         }}
         type="text"
         placeholder="Search movie"
-        defaultValue={inputValue}
+        value={inputValue}
         onChange={handleInputChange}
       />
       <IconButton
