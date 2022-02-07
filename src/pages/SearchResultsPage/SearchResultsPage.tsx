@@ -12,7 +12,7 @@ const SearchResultsPage = () => {
   const [totalPages, setTotalPages] = useState(1)
   const [currentPage, setCurrentPage] = useState(1)
   const searchValue = useRecoilValue(searchInputState)
-  const url = `${SEARCH_URL}/movie/?api_key=${process.env.REACT_APP_API_KEY}&language=en-US&query=${searchValue}&page=${currentPage}`
+  const url = `${SEARCH_URL}/movie?query=${searchValue}&api_key=${process.env.REACT_APP_API_KEY}&language=en-US&page=${currentPage}`
   const { data, error } = useFetch<ResultsMovieTypes>(url)
 
   useEffect(() => {
