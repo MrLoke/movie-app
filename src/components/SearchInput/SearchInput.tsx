@@ -47,6 +47,7 @@ const SearchInput = () => {
             borderColor: 'accent',
           },
         }}
+        type="text"
         placeholder="Search movie"
         defaultValue={inputValue}
         onChange={handleInputChange}
